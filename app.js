@@ -27,13 +27,6 @@ const colors = [
     "#7f8c8d"
 ]
 
-function onClick(event) {
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.strokeStyle = color;
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
-}
-
-canvas.addEventListener("mousemove", onClick);
+ctx.moveTo(200, 200);
+ctx.lineTo(400, 400);
+ctx.stroke();
