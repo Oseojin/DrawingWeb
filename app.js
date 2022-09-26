@@ -108,6 +108,7 @@ function onFileChange(event) {
 function onDoubleClick(event) {
     ctx.save();
     const text = textInput.value;
+    ctx.fillStyle = color.value;
     ctx.lineWidth = 1;
     ctx.font = "68px serif";
     ctx.fillText(text, event.offsetX, event.offsetY);
