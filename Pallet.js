@@ -1,3 +1,4 @@
+const moveableBtn = document.getElementById("moveable-btn");
 const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
@@ -19,11 +20,15 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round";
+let isMoveable = false;
 let isPainting = false;
 let isFilling = false;
 let isErasing = false;
 
 function onMove(event) {
+    if (isMoveable) {
+        return;
+    }
     if (isPainting && !isFilling) {
         ctx.lineTo(event.offsetX, event.offsetY);
         ctx.stroke();
@@ -59,6 +64,9 @@ function onColorClick(event) {
 }
 
 function onModeClick() {
+    if (isMoveable) {
+        isMoveable = false;
+    }
     if (isErasing) {
         isErasing = false;
     }
@@ -75,6 +83,9 @@ function onModeClick() {
 }
 
 function onCanvasClick() {
+    if (isMoveable) {
+        return;
+    }
     if (isFilling) {
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
@@ -86,7 +97,9 @@ function onDestroyClick() {
 }
 
 function onEraserClick() {
-
+    if (isMoveable) {
+        isMoveable = false;
+    }
     ctx.strokeStyle = "white";
     isErasing = true;
     isFilling = false;
@@ -123,6 +136,15 @@ function onSaveClick() {
     a.click();
 }
 
+function onMoveable() {
+    if (!isMoveable) {
+        isMoveable = true;
+    }
+    else {
+        isMoveable = false;
+    }
+}
+
 canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
@@ -143,3 +165,5 @@ eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
 
 saveBtn.addEventListener("click", onSaveClick);
+
+moveableBtn.addEventListener("click", onMoveable);
